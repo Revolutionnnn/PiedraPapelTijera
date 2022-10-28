@@ -1,13 +1,9 @@
 import random
 
-UserVidas = 3
-PCVidas = 3
-pc = random.randint(1, 3)
 
-while UserVidas or PCVidas != 0:
-    print("*" * 40)
+def eleccion():
+    pc = random.randint(1, 3)
     user = int(input("INGRESA UN NUMERO \n1 Piedra \n2 Papel \n3 Tijera \n"))
-    # ELECCION DE NOMBRE
     Nombres = {
         1: "Piedra",
         2: "Papel",
@@ -16,10 +12,10 @@ while UserVidas or PCVidas != 0:
     if user in Nombres:
         print(f"Haz elegido {Nombres[user]}")
         print(f"La maquina ha eligido {Nombres[pc]}")
-    else:
-        pass
-    print("*" * 40)
-    # SISTEMA DE ELECCION
+    return user, pc
+
+
+def reglas(user, pc, PCVidas, UserVidas):
     if user == pc:
         print("Empate")
     elif (user == 1 and pc == 3) or (user == 2 and pc == 1) or (user == 3 and pc == 2):
@@ -34,10 +30,32 @@ while UserVidas or PCVidas != 0:
     print("*" * 40)
     vidas = f"USUARIO VIDAS == {UserVidas}  MAQUINA VIDAS== {PCVidas}"
     print(vidas)
-    # SISTEMA DE PUNTOS
+
+    return PCVidas, UserVidas
+
+
+def ganador(UserVidas, PCVidas):
     if UserVidas == 0:
         print("PERDISTE LA PARTIDA")
-        break
+        exit()
     elif PCVidas == 0:
         print("GANASTE LA PARTIDA")
-        break
+        exit()
+
+
+def run():
+    UserVidas = 3
+    PCVidas = 3
+    Round = 0
+
+    while True:
+        print("*" * 10)
+        print(f"ROUND {Round}")
+        print("*" * 10)
+        Round += 1
+        user, pc = eleccion()
+        UserVidas, PCVidas = reglas(user, pc, UserVidas, PCVidas)
+        ganador(UserVidas, PCVidas)
+
+
+run()
